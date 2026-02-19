@@ -12,10 +12,12 @@ const uploadOnCloudinary = async (localFilePath) => {
         if(!localFilePath) return null;
 
         //upload the file on clodinary
-        const response = await cloudinary.v2.uploader.upload(localFilePath, {resource_type: "auto"});
+        const response = await cloudinary.uploader.upload(localFilePath, {resource_type: "auto"});
 
         //file has been uploaded successfully
-        console.log("File is uploaded on clodinary", response.url)
+        //console.log("File is uploaded on clodinary", response.url)
+
+        fs.unlinkSync(localFilePath)
 
         return response;
     } catch (error) {
