@@ -140,8 +140,8 @@ const logoutUser = asyncHandler(async (req, res) => {
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: { refershToken: undefined
-
+            $unset: { 
+                refershToken: 1 //removes fields from document
             }
         }, 
         {
