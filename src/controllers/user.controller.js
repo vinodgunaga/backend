@@ -1,7 +1,7 @@
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {ApiError} from "../utils/ApiError.js"
 import { User } from "../models/user.model.js"
-import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import {uploadOnCloudinary, deleteFromCloudinary} from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResonse.js"
 import jwt from "jsonwebtoken"
 import { json } from "express"
@@ -163,7 +163,6 @@ const logoutUser = asyncHandler(async (req, res) => {
     )
 })
 
-
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refershToken || req.body
 
@@ -267,6 +266,12 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Avatar file is missing")
     }
 
+    const isDeleted = await deleteFromCloudinary(req.user?.avatar)
+
+    if (!isDeleted) {
+        throw new ApiError(400, "Error while deleting the old file")
+    }
+
     const avatar = await uploadOnCloudinary(avatarLocalPath)
 
     if (!avatar) {
@@ -293,6 +298,12 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
 
     if (!coverImageLocalPath) {
         throw new ApiError(400, "Cover image file is missing")
+    }
+
+    const isDeleted = await deleteFromCloudinary(req.user?.coverImage)
+
+    if (!isDeleted) {
+        throw new ApiError(400, "Error while deleting the old file")
     }
 
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
