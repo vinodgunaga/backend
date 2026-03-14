@@ -23,7 +23,7 @@ const createTweet = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while creating the tweet");
   }
 
-  res
+  return res
     .status(200)
     .json(new ApiResponse(200, tweet, "tweet created successfully"));
 });
@@ -53,7 +53,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while getting all tweet");
   }
 
-  res
+  return res
     .status(200)
     .json(new ApiResponse(200, tweets, `tweets fetched for userId ${userId}`));
 });
@@ -83,7 +83,7 @@ const updateTweet = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while updating the tweet");
   }
 
-  res
+  return res
     .status(200)
     .json(new ApiResponse(200, tweet, "tweet updated successfully"));
 });
@@ -102,7 +102,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while deleting the tweet");
   }
 
-  res
+  return res
     .status(200)
     .json(
       new ApiResponse(

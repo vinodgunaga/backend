@@ -93,7 +93,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while publishing a video");
   }
 
-  res
+  return res
     .status(200)
     .json(new ApiResponse(200, { videoRes }, "Video published successfully"));
 });
@@ -112,7 +112,7 @@ const getVideoById = asyncHandler(async (req, res) => {
     throw new ApiError(500, `could not find a video by id ${videoId}`);
   }
 
-  res
+  return res
     .status(200)
     .json(new ApiResponse(200, video, "Video fetched successfully"));
 });
@@ -160,7 +160,7 @@ const updateVideo = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Error while updating video");
   }
 
-  res
+  return res
     .status(200)
     .json(
       new ApiResponse(200, updatedVideo, "video details updated successfully")
@@ -181,7 +181,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
     throw new ApiError(500, "something went wrong while deleting video");
   }
 
-  res
+  return res
     .status(200)
     .json(new ApiResponse(200, video, "Video deleted successfully"));
 });

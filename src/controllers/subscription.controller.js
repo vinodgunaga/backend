@@ -34,7 +34,7 @@ const toggleSubscription = asyncHandler(async (req, res) => {
     channel: channelId,
   });
 
-  res.status(200).json(
+  return res.status(200).json(
     new ApiResponse(
       200,
       {
@@ -90,7 +90,7 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Error while getting channel subscriberss");
   }
 
-  res
+  return res
     .status(200)
     .json(
       new ApiResponse(
@@ -145,7 +145,7 @@ const getSubscribedChannels = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while getting channel info");
   }
 
-  res
+  return res
     .status(200)
     .json(
       new ApiResponse(200, channels, "channel details fetched successfully")

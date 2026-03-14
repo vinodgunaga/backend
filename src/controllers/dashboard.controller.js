@@ -60,7 +60,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
 
   const totalLikes = like[0]?.totalLikes || 0;
 
-  res.status(200).json(
+  return res.status(200).json(
     new ApiResponse(
       200,
       {
@@ -97,7 +97,7 @@ const getChannelVideos = asyncHandler(async (req, res) => {
     );
   }
 
-  res
+  return res
     .status(200)
     .json(new ApiResponse(200, videos, "channel videos fetched successfully"));
 });
