@@ -91,15 +91,15 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { identifier, password } = req.body;
 
-  if (!username && !email) {
-    throw new ApiError(400, "Email or username is required");
+  if (!identifier) {
+    throw new ApiError(400, "Identifier is required");
   }
-  console.log(username, email, password);
+  console.log(identifier, password);
 
   const user = await User.findOne({
-    $or: [{ email }, { username }],
+    $or: [{ email: identifier }, { username: identifier }],
   });
 
   console.log("user = ", user);
@@ -149,11 +149,11 @@ const logoutUser = asyncHandler(async (req, res) => {
     req.user._id,
     {
       $unset: {
-        refershToken: 1, //removes fields from document
+        refreshToken: 1, //removes fields from document
       },
     },
     {
-      new: true,
+      returnDocument: "after",
     }
   );
 

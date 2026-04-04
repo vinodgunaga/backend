@@ -95,7 +95,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, { videoRes }, "Video published successfully"));
+    .json(new ApiResponse(200, videoRes, "Video published successfully"));
 });
 
 const getVideoById = asyncHandler(async (req, res) => {
@@ -112,9 +112,12 @@ const getVideoById = asyncHandler(async (req, res) => {
     throw new ApiError(500, `could not find a video by id ${videoId}`);
   }
 
+  video.views += 1;
+  const updatedVideo = await video.save({ validateBeforeSave: false });
+
   return res
     .status(200)
-    .json(new ApiResponse(200, video, "Video fetched successfully"));
+    .json(new ApiResponse(200, updatedVideo, "Video fetched successfully"));
 });
 
 const updateVideo = asyncHandler(async (req, res) => {

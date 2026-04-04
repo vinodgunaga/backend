@@ -10,7 +10,7 @@ const createTweet = asyncHandler(async (req, res) => {
 
   const { content } = req.body;
 
-  if (!content?.trim() == "") {
+  if (content?.trim() == "") {
     throw new ApiError(400, "Tweet message is empty");
   }
 
